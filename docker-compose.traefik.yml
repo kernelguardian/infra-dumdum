@@ -70,11 +70,36 @@ services:
       # any other service that needs to be publicly available with HTTPS
       - traefik-public
 
+  portainer:
+    container_name: portainer
+    image: portainer-ce:latest
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      # Enable Traefik for this service, to make it available in the public network
+      - traefik.enable=true
+      # Define the port inside of the Docker service to use
+      - traefik.http.services.portainer.loadbalancer.server.port=9443
+      # Make Traefik use this domain in HTTP
+      - traefik.http.routers.portainer.entrypoints=http
+      - traefik.http.routers.portainer.rule=Host(`portainer.thedumdum.com`)
+      # Use the traefik-public network (declared below)
+      - traefik.docker.network=traefik-public
+      # traefik-https the actual router using HTTPS
+      - traefik.http.routers.portainer.entrypoints=https
+      - traefik.http.routers.portainer.rule=Host(`portainer.thedumdum.com`)
+    networks:
+      # Use the public network created to be shared between Traefik and
+      # any other service that needs to be publicly available with HTTPS
+      - traefik-public
 volumes:
   # Create a volume to store the certificates, there is a constraint to make sure
   # Traefik is always deployed to the same Docker node with the same volume containing
   # the HTTPS certificates
   traefik-public-certificates:
+  portainer_data:
 
 
 networks:
