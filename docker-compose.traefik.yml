@@ -25,7 +25,9 @@ services:
     networks:
       - traefik-public
 
-volumes: traefic-public-certificates
+volumes:
+  traefic-public-certificates:
+
 
 networks:
   traefik-public:
