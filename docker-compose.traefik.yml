@@ -5,14 +5,20 @@ services:
     container_name: traefik
     image: "traefik:latest"
     ports:
-      - "80:80"
+      - 80:80
+      - 443:443
     restart: always
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik.public-certificates:/certificates
     command:
-      - --entrypoints.http.address=:80
       - --providers.docker
       - --providers.docker.exposedbydefault=false
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --certificatesresolvers.le.acme.email=orca-per-0l@icloud.com
+      - --certificatesresolvers.le.acme.storage=/certificates/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
       - --log
       - --accesslog
 
