@@ -10,7 +10,7 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik.public-certificates:/certificates
+      - traefik-public-certificates:/certificates
     command:
       - --providers.docker
       - --providers.docker.exposedbydefault=false
@@ -24,6 +24,8 @@ services:
 
     networks:
       - traefik-public
+
+volumes: traefic-public-certificates
 
 networks:
   traefik-public:
