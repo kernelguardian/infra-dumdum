@@ -94,12 +94,12 @@ services:
 #       # Use the public network created to be shared between Traefik and
 #       # any other service that needs to be publicly available with HTTPS
 #       - traefik-public
-# volumes:
-#   # Create a volume to store the certificates, there is a constraint to make sure
-#   # Traefik is always deployed to the same Docker node with the same volume containing
-#   # the HTTPS certificates
-#   traefik-public-certificates:
-#   portainer_data:
+volumes:
+  # Create a volume to store the certificates, there is a constraint to make sure
+  # Traefik is always deployed to the same Docker node with the same volume containing
+  # the HTTPS certificates
+  traefik-public-certificates:
+  portainer_data:
 
 
 networks:
