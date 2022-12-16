@@ -12,7 +12,7 @@ services:
     command:
       - --entrypoints.http.address=:80
       - --providers.docker
-      - --providers.exposedbydefault=false
+      - --providers.docker.exposedbydefault=false
       - --log
       - --accesslog
 
