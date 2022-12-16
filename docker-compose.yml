@@ -9,8 +9,9 @@ services:
     restart: always
     labels:
       - traefik.enable=true
-      - traefik.http.services.BACKEND_APP.loadbalancer.server.port=80
-      - traefik.http.routers.BACKEND_APP.rule=Host(`api.thedumdum.com`)
+      - traefik.http.services.app.loadbalancer.server.port=80
+      - traefik.http.services.app.http.entrypoints=http
+      - traefik.http.routers.app.http.rule=Host(`api.thedumdum.com`)
       - traefik.docker.network=traefik.public
     networks:
       - traefik-public
