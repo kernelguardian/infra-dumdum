@@ -1,24 +1,24 @@
-version: "3.3"
+# version: "3.3"
 
-services:
+# services:
 
-  portal:
-    image: thedumdum/frontend:latest
-    container_name: portal-frontend
-    networks:
-    - thedumdum
-    - gateway
+#   portal:
+#     image: thedumdum/frontend:latest
+#     container_name: portal-frontend
+#     networks:
+#     - thedumdum
+#     - gateway
 
-    ports:
-      - "3000:80"
+#     ports:
+#       - "3000:80"
 
-  backend:
-    image: thedumdum/backend:latest
-    container_name: portal-backend
-    networks:
-    - thedumdum
-    - gateway
+#   backend:
+#     image: thedumdum/backend:latest
+#     container_name: portal-backend
+#     networks:
+#     - thedumdum
+#     - gateway
 
-networks:
-  - gateway
-  - thedumdum
+# networks:
+#   - gateway
+#   - thedumdum
