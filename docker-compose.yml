@@ -97,6 +97,10 @@ services:
       # any other service that needs to be publicly available with HTTPS
       - traefik-public
 
+volumes:
+  portainer_data:
+
+
 networks:
   traefik-public:
     external: true
