@@ -62,6 +62,41 @@ services:
       # any other service that needs to be publicly available with HTTPS
       - traefik-public
 
+  portainer_data:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    labels:
+      # Enable Traefik for this specific "backend" service
+      - traefik.enable=true
+      # Define the port inside of the Docker service to use
+      - traefik.http.services.app3.loadbalancer.server.port=9000
+      # Make Traefik use this domain in HTTP
+      - traefik.http.routers.app3-http.entrypoints=http
+      - traefik.http.routers.app3-http.rule=Host(`portainer.thedumdum.com`)
+      # Use the traefik-public network (declared below)
+      - traefik.docker.network=traefik-public
+      # Make Traefik use this domain in HTTPS
+      - traefik.http.routers.app3-https.entrypoints=https
+      - traefik.http.routers.app3-https.rule=Host(`portainer.thedumdum.com`)
+      - traefik.http.routers.app3-https.tls=true
+      # Use the "le" (Let's Encrypt) resolver
+      - traefik.http.routers.app3-https.tls.certresolver=le
+      # https-redirect middleware to redirect HTTP to HTTPS
+      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+      # Middleware to redirect HTTP to HTTPS
+      - traefik.http.routers.app3-http.middlewares=https-redirect
+      # - traefik.http.routers.app-https.middlewares=admin-auth
+    volumes:
+      # Add Docker as a mounted volume, so that Traefik can read the labels of other services
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      # Use the public network created to be shared between Traefik and
+      # any other service that needs to be publicly available with HTTPS
+      - traefik-public
+
 networks:
   traefik-public:
     external: true
